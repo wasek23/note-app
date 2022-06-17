@@ -4,10 +4,12 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import Input from '../../components/Form/Input';
 import Button from '../../components/Button/Button';
-import colors from '../../theme/colors';
+import Loading from '../../components/Loading/Loading';
 import { auth } from '../../../App';
+import colors from '../../theme/colors';
 
-const SignIn = ({ setLoading, navigation }) => {
+const SignIn = ({ navigation }) => {
+	const [loading, setLoading] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -34,7 +36,7 @@ const SignIn = ({ setLoading, navigation }) => {
 			<Input placeholder='Email address' onChangeText={val => setEmail(val)} autoCapitalize='none' />
 			<Input placeholder='Password' secureTextEntry onChangeText={val => setPassword(val)} />
 
-			<Button text='Sign In' customStyle={styles.button} onPress={onSignIn} />
+			{loading ? <Loading style={styles.button} /> : <Button text='Sign In' customStyle={styles.button} onPress={onSignIn} />}
 		</View>
 
 		<View style={styles.signUpMsg}>

@@ -5,7 +5,7 @@ import colors from '../../theme/colors';
 const Radio = ({ value, options, onPress, style }) => {
 	return options.map(opt => <Pressable
 		key={opt}
-		style={{ ...styles.radioEl, ...style }}
+		style={[styles.radioEl, style]}
 		onPress={() => onPress(opt)}
 	>
 		<View style={[styles.radioOuterCircle, opt === value && styles.selectedRadioOuterCircle]}>

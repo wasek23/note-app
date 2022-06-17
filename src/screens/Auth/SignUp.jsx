@@ -6,13 +6,14 @@ import { collection, doc, addDoc, getDoc, onSnapshot, query, where } from 'fireb
 import Input from '../../components/Form/Input';
 import Radio from '../../components/Form/Radio';
 import Button from '../../components/Button/Button';
-import colors from '../../theme/colors';
+import Loading from '../../components/Loading/Loading';
 import { auth, db } from '../../../App';
+import colors from '../../theme/colors';
 
 const genderOptions = ['Male', 'Female'];
 
-const SignUp = ({ setLoading }) => {
-	// const [loading, setLoading] = useState(false);
+const SignUp = () => {
+	const [loading, setLoading] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [name, setName] = useState('');
@@ -65,20 +66,20 @@ const SignUp = ({ setLoading }) => {
 				<Radio value={gender} options={genderOptions} onPress={val => setGender(val)} style={styles.genderRadio} />
 			</View>
 
-			<Button text='Sign Up' customStyle={styles.button} onPress={onSignUp} />
+			{loading ? <Loading style={styles.button} /> : <Button text='Sign Up' customStyle={styles.button} onPress={onSignUp} />}
 		</View>
 
 		<View style={styles.agreeMsg}>
 			<Text style={styles.agreeText}>By continuing you, accept the</Text>
 
 			<Pressable>
-				<Text style={{ ...styles.agreeText, ...styles.agreeLink }}>Terms of Use</Text>
+				<Text style={[styles.agreeText, styles.agreeLink]}>Terms of Use</Text>
 			</Pressable>
 
 			<Text style={styles.agreeText}>and</Text>
 
 			<Pressable>
-				<Text style={{ ...styles.agreeText, ...styles.agreeLink }}>Privacy Policy</Text>
+				<Text style={[styles.agreeText, styles.agreeLink]}>Privacy Policy</Text>
 			</Pressable>
 		</View>
 	</SafeAreaView>

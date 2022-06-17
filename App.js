@@ -12,8 +12,9 @@ import SignIn from './src/screens/Auth/SignIn';
 import SignUp from './src/screens/Auth/SignUp';
 import Create from './src/screens/Note/Create';
 import Edit from './src/screens/Note/Edit';
-import colors from './src/theme/colors';
+import Loading from './src/components/Loading/Loading';
 import firebaseConfig from './firebase.config';
+import colors from './src/theme/colors';
 
 // Stack for Navigation
 const Stack = createNativeStackNavigator();
@@ -45,9 +46,7 @@ export default function App() {
 	}, []);
 
 	if (loading) {
-		return <View style={styles.loading}>
-			<ActivityIndicator color={colors.yellow} size='large' />
-		</View>
+		return <Loading style={styles.loading} />
 	}
 
 	return <NavigationContainer theme={AppTheme}>
@@ -61,17 +60,14 @@ export default function App() {
 					{props => <Create {...props} user={user} />}
 				</Stack.Screen>
 
-				<Stack.Screen name='EditNote' component={Edit} />
-			</> : <>
-				<Stack.Screen name='SignIn' options={{ headerShown: false }}>
-					{props => <SignIn {...props} setLoading={setLoading} />}
+				<Stack.Screen name='EditNote'>
+					{props => <Edit {...props} user={user} />}
 				</Stack.Screen>
 
-				<Stack.Screen name='SignUp'>
-					{props => <SignUp {...props} setLoading={setLoading} />}
-				</Stack.Screen>
-				{/* <Stack.Screen name='SignIn' component={SignIn} /> */}
-				{/* <Stack.Screen name='SignUp' component={SignUp} /> */}
+				{/* <Stack.Screen name='EditNote' component={Edit} /> */}
+			</> : <>
+				<Stack.Screen name='SignIn' component={SignIn} options={{ headerShown: false }} />
+				<Stack.Screen name='SignUp' component={SignUp} />
 			</>}
 		</Stack.Navigator>
 	</NavigationContainer>;
